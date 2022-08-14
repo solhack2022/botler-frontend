@@ -1,0 +1,17 @@
+[
+  {
+    "name": "MockJob1",
+    "address": "0x123",
+    "credit": 12.3
+  },
+  {
+    "name": "MockJob2",
+    "address": "0x456",
+    "credit": 4.56
+  },
+  {
+    "name": "MockJob3",
+    "address": "0x789",
+    "credit": 0.789
+  }
+]
