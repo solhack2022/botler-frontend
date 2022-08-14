@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { useJobs } from "./useJobs";
+import { useWallet } from "./useWallet";
 
 function App() {
   const { data: jobs } = useJobs();
@@ -22,6 +23,18 @@ function App() {
     return filteredJobs;
   }, [jobs, searchInput]);
 
+  const { connect, disconnect, publicKey } = useWallet();
+
+  const handleClickConnect = async () => {
+    if (publicKey) {
+      disconnect();
+
+      return;
+    }
+
+    await connect();
+  };
+
   return (
     <div
       style={{
@@ -31,6 +44,9 @@ function App() {
         gap: "40px",
       }}
     >
+      <button onClick={handleClickConnect}>
+        {publicKey || "Connect to Phantom wallet"}
+      </button>
       <div style={{ display: "flex", flexDirection: "column" }}>
         <h2>Jobs</h2>
         <input
@@ -70,7 +86,9 @@ function App() {
             style={{ width: "100%" }}
             placeholder="Job contract address (0x...)"
           ></input>
-          <button style={{ whiteSpace: "nowrap" }}>Register Job</button>
+          <button disabled={!publicKey} style={{ whiteSpace: "nowrap" }}>
+            Register Job
+          </button>
         </div>
       </div>
     </div>
